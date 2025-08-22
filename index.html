@@ -52,80 +52,48 @@
 </head>
 <body class="text-[#4a3728] min-h-screen flex items-center justify-center p-4 sm:p-6 lg:p-8">
 
-    <main id="invitation-card" class="w-full max-w-[650px] aspect-[1/1.55] bg-[#f3e9d8] p-8 sm:p-12 rounded-lg shadow-2xl border-4 border-[#c8b89e] flex flex-col card-background">
+    <main id="invitation-card" class="w-full max-w-[650px] aspect-[1/1.55] bg-[#f3e9d8] p-8 sm:p-12 rounded-lg shadow-2xl border-4 border-[#c8b89e] relative card-background">
         
-        <form id="rsvp-form" class="space-y-4 mt-[430px]">
-            <div>
-                <label for="name" class="block text-sm font-bold mb-2">Name of Witch or Wizard</label>
-                <input type="text" id="name" name="name" class="form-input w-full p-3 rounded-md" required placeholder="Ron Weasley">
-            </div>
-            
-            <div>
-                <label for="email" class="block text-sm font-bold mb-2">Magical Email Address</label>
-                <input type="email" id="email" name="email" class="form-input w-full p-3 rounded-md" required placeholder="ron.weasley@hogwarts.edu">
-            </div>
-
-            <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
-                <div>
-                    <label for="guest-count" class="block text-sm font-bold mb-2">Total Number of Guests</label>
-                    <input type="number" id="guest-count" name="guest-count" min="1" value="1" class="form-input w-full p-3 rounded-md text-center" placeholder="e.g., 1 or 5">
+        <div class="absolute inset-x-0 bottom-0 top-[450px]">
+            <form id="rsvp-form" class="space-y-4 px-4" action="https://docs.google.com/forms/d/e/1FAIpQLSdZeDW9YKlkUNxEnIraPtIHE-C4xwMllhfX5ypIl0co-TcOOg/formResponse" method="POST" target="hidden-iframe">
+                <div class="md:max-w-lg md:mx-auto">
+                    <label for="name" class="block text-sm font-bold mb-2">Name of Witch or Wizard</label>
+                    <input type="text" id="name" name="entry.1167545747" class="form-input w-full p-3 rounded-md" required placeholder="Ron Weasley">
                 </div>
-                <div>
-                    <label for="dietary" class="block text-sm font-bold mb-2">Any Potion Allergies or Dietary Needs?</label>
-                    <input type="text" id="dietary" name="dietary" class="form-input w-full p-3 rounded-md" placeholder="e.g., No nuts, please!">
+                
+                <div class="md:max-w-lg md:mx-auto">
+                    <label for="email" class="block text-sm font-bold mb-2">Magical Email Address</label>
+                    <input type="email" id="email" name="entry.1003321681" class="form-input w-full p-3 rounded-md" required placeholder="ron.weasley@hogwarts.edu">
                 </div>
-            </div>
-            <div class="text-center">
-                 <p class="text-sm text-center">Please send your reply by October 20th.</p>
-                <button type="submit" class="btn-primary font-bold py-3 px-8 rounded-full text-lg shadow-lg">
-                    Send by Owl Post
-                </button>
-            </div>
-        </form>
 
-        <div id="confirmation" class="hidden text-center py-12">
-            <h2 class="font-magic text-3xl font-bold text-[#6d513c] mb-4">Thank You!</h2>
-            <p class="text-lg">Your owl has been dispatched and your RSVP has been received. We eagerly await your arrival for a magical celebration!</p>
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-6 md:max-w-lg md:mx-auto">
+                    <div>
+                        <label for="guest-count" class="block text-sm font-bold mb-2">Total Number of Guests</label>
+                        <input type="number" id="guest-count" name="entry.1558975737" min="1" value="1" class="form-input w-full p-3 rounded-md text-center" placeholder="e.g., 1 or 5">
+                    </div>
+                    <div>
+                        <label for="dietary" class="block text-sm font-bold mb-2">Any Potion Allergies or Dietary Needs?</label>
+                        <input type="text" id="dietary" name="entry.1643633111" class="form-input w-full p-3 rounded-md" placeholder="e.g., No nuts, please!">
+                    </div>
+                </div>
+                <div class="text-center pt-8">
+                    <button type="submit" class="btn-primary font-bold py-3 px-8 rounded-full text-lg shadow-lg">
+                        Send by Owl Post
+                    </button>
+                </div>
+            </form>
+
+            <div id="confirmation" class="hidden text-center py-12">
+                <h2 class="font-magic text-3xl font-bold text-[#6d513c] mb-4">Thank you!</h2>
+                <p class="text-lg">Your owl has been dispatched and your RSVP has been received. We eagerly await your arrival for a magical celebration!</p>
+            </div>
         </div>
-
     </main>
-
+    <iframe name="hidden-iframe" id="hidden-iframe" style="display:none;" onload="if(document.getElementById('rsvp-form').dataset.submitted) { document.getElementById('rsvp-form').classList.add('hidden'); document.getElementById('confirmation').classList.remove('hidden'); }"></iframe>
     <script>
-        const form = document.getElementById('rsvp-form');
-        const confirmation = document.getElementById('confirmation');
-        
-        const FORM_URL = 'https://docs.google.com/forms/d/e/1FAIpQLSdZeDW9YKlkUNxEnIraPtIHE-C4xwMllhfX5ypIl0co-TcOOg/viewform'; 
-        const ENTRY_IDS = {
-            name: 'entry.1167545747',
-            email: 'entry.1003321681',
-            guest_count: 'entry.1558975737',
-            dietary: 'entry.1643633111'
-        };
-
-        form.addEventListener('submit', function(event) {
-            event.preventDefault(); 
-            
-            const formData = new FormData(form);
-            const params = new URLSearchParams();
-            
-            params.append(ENTRY_IDS.name, formData.get('name'));
-            params.append(ENTRY_IDS.email, formData.get('email'));
-            params.append(ENTRY_IDS.guest_count, formData.get('guest-count'));
-            params.append(ENTRY_IDS.dietary, formData.get('dietary'));
-
-            fetch(FORM_URL + '?' + params.toString(), {
-                method: 'POST',
-                mode: 'no-cors'
-            }).then(() => {
-                form.classList.add('hidden');
-                confirmation.classList.remove('hidden');
-            }).catch(error => {
-                console.error('Error submitting form:', error);
-                alert('An error occurred. Please try again or send your RSVP by owl post!');
-            });
+        document.getElementById('rsvp-form').addEventListener('submit', function() {
+            this.dataset.submitted = 'true';
         });
     </script>
-
 </body>
 </html>
-
