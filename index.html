@@ -43,7 +43,7 @@
             transform: translateY(-2px);
         }
         .card-background {
-            background-image: url('https://github.com/tazzcar/wolfiebirthdayparty/blob/6612aff44ba376921fc1c35594f708bf218cb972/Card%20maker%20project-4.png?raw=true');
+            background-image: url('https://github.com/tazzcar/wolfiebirthdayparty/blob/main/Card%20maker%20project-4.png');
             background-size: contain;
             background-repeat: no-repeat;
             background-position: center;
@@ -55,7 +55,7 @@
     <main id="invitation-card" class="w-full max-w-[650px] aspect-[1/1.55] bg-[#f3e9d8] p-8 sm:p-12 rounded-lg shadow-2xl border-4 border-[#c8b89e] relative card-background">
         
         <div class="absolute inset-x-0 bottom-0 top-[450px]">
-            <form id="rsvp-form" class="space-y-4 px-4" action="https://docs.google.com/forms/d/e/1FAIpQLSdZeDW9YKlkUNxEnIraPtIHE-C4xwMllhfX5ypIl0co-TcOOg/formResponse" method="POST" target="hidden-iframe">
+            <form id="rsvp-form" class="space-y-4 px-4" action="https://docs.google.com/forms/d/e/1FAIpQLSdZeDW9YKlkUNxEnIraPtIHE-C4xwMllhfX5ypIl0co-TcOOg/formResponse" method="POST">
                 <div class="md:max-w-lg md:mx-auto">
                     <label for="name" class="block text-sm font-bold mb-2">Name of Witch or Wizard</label>
                     <input type="text" id="name" name="entry.1167545747" class="form-input w-full p-3 rounded-md" required placeholder="Ron Weasley">
@@ -89,10 +89,28 @@
             </div>
         </div>
     </main>
-    <iframe name="hidden-iframe" id="hidden-iframe" style="display:none;" onload="if(document.getElementById('rsvp-form').dataset.submitted) { document.getElementById('rsvp-form').classList.add('hidden'); document.getElementById('confirmation').classList.remove('hidden'); }"></iframe>
     <script>
-        document.getElementById('rsvp-form').addEventListener('submit', function() {
-            this.dataset.submitted = 'true';
+        const form = document.getElementById('rsvp-form');
+        const confirmation = document.getElementById('confirmation');
+        
+        form.addEventListener('submit', function(event) {
+            event.preventDefault(); 
+            
+            const formData = new FormData(form);
+            const params = new URLSearchParams();
+            
+            for (const [key, value] of formData.entries()) {
+                params.append(key, value);
+            }
+
+            fetch(form.action, {
+                method: 'POST',
+                body: params,
+                mode: 'no-cors'
+            }).finally(() => {
+                form.classList.add('hidden');
+                confirmation.classList.remove('hidden');
+            });
         });
     </script>
 </body>
