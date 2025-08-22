@@ -15,9 +15,16 @@
     <style>
         body {
             font-family: 'Lato', sans-serif;
-            background-image: url('https://images.unsplash.com/photo-1555567568-d0ed4b2a8d1a?q=80&w=2000');
+            /* New Harry Potter-themed background image */
+            background-image: url('https://images.unsplash.com/photo-1628173499427-6f68e0d99c4c');
             background-size: cover;
             background-position: center;
+        }
+        /* Mobile-specific styles for a zoomed-in background image */
+        @media (max-width: 640px) {
+            body {
+                background-size: 150%;
+            }
         }
         .font-magic {
             font-family: 'Cinzel Decorative', cursive;
@@ -44,13 +51,19 @@
         }
         .card-background {
             background-image: url('https://github.com/tazzcar/wolfiebirthdayparty/blob/main/Card%20maker%20project-4.png?raw=true');
-            background-size: cover; /* Changed to cover the full card area */
+            background-size: contain;
             background-repeat: no-repeat;
             background-position: center top; 
         }
         .form-wrapper {
             position: relative;
             z-index: 10;
+        }
+        /* Desktop-specific styles for the form position */
+        @media (min-width: 641px) {
+            .form-wrapper {
+                transform: translateY(-100px);
+            }
         }
     </style>
 </head>
@@ -65,26 +78,26 @@
             <form id="rsvp-form" class="space-y-4 px-4" action="https://docs.google.com/forms/d/e/1FAIpQLSdZeDW9YKlkUNxEnIraPtIHE-C4xwMllhfX5ypIl0co-TcOOg/formResponse" method="POST">
                 <div class="md:max-w-lg md:mx-auto">
                     <label for="name" class="block text-sm font-bold mb-2">Name of Witch or Wizard</label>
-                    <input type="text" id="name" name="entry.1167545747" class="form-input w-full p-3 rounded-md" required placeholder="Ron Weasley">
+                    <input type="text" id="name" name="entry.1167545747" class="form-input w-full p-2 sm:p-3 rounded-md" required placeholder="Ron Weasley">
                 </div>
                 
                 <div class="md:max-w-lg md:mx-auto">
                     <label for="email" class="block text-sm font-bold mb-2">Magical Email Address</label>
-                    <input type="email" id="email" name="entry.1003321681" class="form-input w-full p-3 rounded-md" required placeholder="ron.weasley@hogwarts.edu">
+                    <input type="email" id="email" name="entry.1003321681" class="form-input w-full p-2 sm:p-3 rounded-md" required placeholder="ron.weasley@hogwarts.edu">
                 </div>
 
                 <div class="grid grid-cols-1 sm:grid-cols-2 gap-6 md:max-w-lg md:mx-auto">
                     <div>
                         <label for="guest-count" class="block text-sm font-bold mb-2">Total Number of Guests</label>
-                        <input type="number" id="guest-count" name="entry.1558975737" min="1" value="1" class="form-input w-full p-3 rounded-md text-center" placeholder="e.g., 1 or 5">
+                        <input type="number" id="guest-count" name="entry.1558975737" min="1" value="1" class="form-input w-full p-2 sm:p-3 rounded-md text-center" placeholder="e.g., 1 or 5">
                     </div>
                     <div>
                         <label for="dietary" class="block text-sm font-bold mb-2">Any Potion Allergies or Dietary Needs?</label>
-                        <input type="text" id="dietary" name="entry.1643633111" class="form-input w-full p-3 rounded-md" placeholder="e.g., No nuts, please!">
+                        <input type="text" id="dietary" name="entry.1643633111" class="form-input w-full p-2 sm:p-3 rounded-md" placeholder="e.g., No nuts, please!">
                     </div>
                 </div>
                 <div class="text-center pt-8">
-                    <button type="submit" class="btn-primary font-bold py-3 px-8 rounded-full text-lg shadow-lg">
+                    <button type="submit" class="btn-primary font-bold py-2 px-6 sm:py-3 sm:px-8 text-base sm:text-lg rounded-full shadow-lg">
                         Send by Owl Post
                     </button>
                 </div>
@@ -92,8 +105,8 @@
         </div>
 
         <div id="confirmation" class="hidden text-center form-wrapper">
-            <h2 class="font-magic text-3xl font-bold text-[#6d513c] mb-4">Thank you!</h2>
-            <p class="text-lg">Your owl has been dispatched and your RSVP has been received. We eagerly await your arrival for a magical celebration!</p>
+            <h2 class="font-magic text-2xl sm:text-3xl font-bold text-[#6d513c] mb-4">Thank you!</h2>
+            <p class="text-base sm:text-lg">Your owl has been dispatched and your RSVP has been received. We eagerly await your arrival for a magical celebration!</p>
         </div>
     </main>
     <script>
