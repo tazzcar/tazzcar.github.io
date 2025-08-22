@@ -28,7 +28,7 @@
             transition: all 0.3s ease;
         }
         .form-input:focus {
-            background-color: rgba(255, 251, 235, 1);
+            background-color: rgba(255, 235, 215, 1);
             border-color: #78552b;
             box-shadow: 0 0 0 3px rgba(120, 85, 43, 0.2);
             outline: none;
@@ -46,15 +46,27 @@
             background-image: url('https://github.com/tazzcar/wolfiebirthdayparty/blob/main/Card%20maker%20project-4.png?raw=true');
             background-size: contain;
             background-repeat: no-repeat;
-            background-position: center;
+            background-position: center top; 
+        }
+        .form-wrapper {
+            /* Position the wrapper at the very bottom, then shift it up */
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            transform: translateY(-150px); /* Adjust this value as needed */
+            padding-bottom: 20px;
         }
     </style>
 </head>
 <body class="text-[#4a3728] min-h-screen flex items-center justify-center p-4 sm:p-6 lg:p-8">
 
     <main id="invitation-card" class="w-full max-w-[650px] aspect-[1/1.55] bg-[#f3e9d8] p-8 sm:p-12 rounded-lg shadow-2xl border-4 border-[#c8b89e] relative card-background">
+        <!-- A flex-grow div pushes content up if needed. -->
+        <div class="flex-grow"></div>
         
-        <div class="absolute inset-x-0 bottom-0 top-[450px]">
+        <!-- A new wrapper div that uses a CSS transform to move the content up. -->
+        <div class="form-wrapper">
             <form id="rsvp-form" class="space-y-4 px-4" action="https://docs.google.com/forms/d/e/1FAIpQLSdZeDW9YKlkUNxEnIraPtIHE-C4xwMllhfX5ypIl0co-TcOOg/formResponse" method="POST">
                 <div class="md:max-w-lg md:mx-auto">
                     <label for="name" class="block text-sm font-bold mb-2">Name of Witch or Wizard</label>
@@ -82,11 +94,11 @@
                     </button>
                 </div>
             </form>
+        </div>
 
-            <div id="confirmation" class="hidden text-center py-12">
-                <h2 class="font-magic text-3xl font-bold text-[#6d513c] mb-4">Thank you!</h2>
-                <p class="text-lg">Your owl has been dispatched and your RSVP has been received. We eagerly await your arrival for a magical celebration!</p>
-            </div>
+        <div id="confirmation" class="hidden text-center form-wrapper">
+            <h2 class="font-magic text-3xl font-bold text-[#6d513c] mb-4">Thank you!</h2>
+            <p class="text-lg">Your owl has been dispatched and your RSVP has been received. We eagerly await your arrival for a magical celebration!</p>
         </div>
     </main>
     <script>
